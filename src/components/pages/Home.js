@@ -15,13 +15,16 @@ const Home = () => {
     setItems(getItems());
   }, []);
 
-  // Voice search handling
   const handleVoiceSearch = () => {
-    setSearchTerm(transcript);
-    resetTranscript();
+    if (transcript) {
+      setSearchTerm(transcript);
+      speak(`Searching for ${transcript}`);
+      resetTranscript();
+    } else {
+      alert("No voice input detected. Please try again.");
+    }
   };
 
-  // Accessibility features
   const toggleHighContrast = () => {
     document.body.classList.toggle('high-contrast');
   };
@@ -30,7 +33,6 @@ const Home = () => {
     document.body.classList.toggle('large-text');
   };
 
-  // Filter items based on search term and category
   const filteredItems = items.filter(item => 
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (categoryFilter ? item.category === categoryFilter : true)
@@ -41,23 +43,16 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className="home-container">
       <h2>Smart Storage Item Catalog</h2>
 
-      {/* Voice command buttons */}
-      <button onClick={SpeechRecognition.startListening}>
-        Start Voice Search
-      </button>
-      <button onClick={SpeechRecognition.stopListening}>
-        Stop Voice Search
-      </button>
+      <button onClick={SpeechRecognition.startListening}>Start Voice Search</button>
+      <button onClick={SpeechRecognition.stopListening}>Stop Voice Search</button>
       <button onClick={handleVoiceSearch}>Search with Voice</button>
 
-      {/* Accessibility buttons */}
       <button onClick={toggleHighContrast}>Toggle High Contrast</button>
       <button onClick={toggleLargeText}>Toggle Large Text</button>
 
-      {/* Search and filter options */}
       <input 
         type="text" 
         placeholder="Search by name..." 
@@ -71,12 +66,10 @@ const Home = () => {
         ))}
       </select>
 
-      {/* Filtered Items List */}
       <ul>
         {filteredItems.map((item, index) => (
           <li key={index}>
             <strong>{item.name}</strong> - {item.category} (Located in: {item.location})
-            {/* QR Code for each item */}
             <QRCodeCanvas value={JSON.stringify(item)} size={64} />
             <button onClick={() => speak(`Item: ${item.name}, located in ${item.location}`)}>
               Voice Feedback
@@ -85,7 +78,6 @@ const Home = () => {
         ))}
       </ul>
 
-      {/* Voice command listening status */}
       {listening && <p>Listening for commands...</p>}
     </div>
   );

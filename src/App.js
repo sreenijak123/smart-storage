@@ -5,6 +5,7 @@ import Home from './components/pages/Home';
 import AddItem from './components/pages/AddItem';
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
+import Profile from './components/pages/Profile'; // Import the Profile component
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/add-item" element={isAuthenticated ? <AddItem /> : <Navigate to="/login" />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} /> {/* New Profile route */}
         </Routes>
       </div>
     </Router>
