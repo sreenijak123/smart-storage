@@ -1,6 +1,6 @@
 // src/utils/storage.js
 
-// Item-related functions
+// src/utils/storage.js
 export const getItems = () => {
   const items = localStorage.getItem('items');
   return items ? JSON.parse(items) : [];
@@ -11,6 +11,13 @@ export const saveItem = (item) => {
   items.push(item);
   localStorage.setItem('items', JSON.stringify(items));
 };
+
+// Utility function to retrieve a specific item by name (optional, for convenience)
+export const getItemByName = (name) => {
+  const items = getItems();
+  return items.find(item => item.name === name);
+};
+
 
 // User-related functions
 export const getUserProfile = () => {

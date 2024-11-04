@@ -1,6 +1,8 @@
 // src/components/pages/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Register.css'; // Import the CSS file
+
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -20,7 +22,8 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="register-container">
+    <div className="register-box">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input 
@@ -42,6 +45,7 @@ const Login = () => {
       <p>
         Don’t have an account? <a href="/register">Register here</a>
       </p>
+    </div>
     </div>
   );
 };

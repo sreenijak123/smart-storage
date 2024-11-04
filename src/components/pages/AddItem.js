@@ -1,66 +1,70 @@
 // src/pages/AddItem.js
 import React, { useState } from 'react';
-import { saveItem } from '../utils/storage';
-import { useNavigate } from 'react-router-dom';
-import { speak } from '../utils/voice';
+import { Link } from 'react-router-dom';
+
 
 const AddItem = () => {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
-  const [location, setLocation] = useState('');
-  const [type, setType] = useState(''); // New state for item type
-  const navigate = useNavigate();
+  const [type, setType] = useState('');
+  const [location, setLocation] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    saveItem({ name, category, location, type }); // Save item with new type property
-    speak(`${name} added to storage.`);
-    navigate('/');
+  const handleFileChange = (event) => {
+    setLocation(event.target.files[0]);
+  };
+
+  const handleAddItem = () => {
+    alert(`Item added: ${name}, ${category}, ${type}`);
+  };
+
+  const handleUpload = () => {
+    if (location) {
+      alert(`File "${location.name}" uploaded successfully!`);
+      // Add file upload logic here if necessary, such as sending the file to a server
+    } else {
+      alert("Please choose a file to upload.");
+    }
   };
 
   return (
-    <div>
-      <h2>Add Item</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Name:</label>
+    <div className="add-item-container">
+      <header className="header">
+        <div className="logo">LOGO</div>
+        <h1>SMART STORAGE SYSTEM</h1>
+      </header>
+
+      <div className="add-item-form">
+        <h2>ADD ITEMS</h2>
+
+        <label>NAME:</label>
         <input 
           type="text" 
           value={name} 
           onChange={(e) => setName(e.target.value)} 
-          required 
         />
 
-        <label>Category:</label>
-        <input 
-          type="text" 
-          value={category} 
-          onChange={(e) => setCategory(e.target.value)} 
-          required 
-        />
-
-        <label>Location:</label>
-        <input 
-          type="text" 
-          value={location} 
-          onChange={(e) => setLocation(e.target.value)} 
-          required 
-        />
-
-        {/* Dropdown for Type Selection */}
-        <label>Type:</label>
-        <select 
-          value={type} 
-          onChange={(e) => setType(e.target.value)} 
-          required
-        >
-          <option value="">Select Type</option>
-          <option value="Image">Image</option>
-          <option value="PDF">PDF</option>
-          <option value="Video">Video</option>
+        <label>CATEGORY:</label>
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="">Select Category</option>
+          <option value="Laptop">Laptop</option>
+          <option value="Mobile">Mobile</option>
         </select>
 
-        <button type="submit">Add Item</button>
-      </form>
+        <label>TYPE:</label>
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="">Select Type</option>
+          <option value="Image">IMG</option>
+          <option value="Video">VIDEO</option>
+          <option value="Document">DOC</option>
+        </select>
+
+        <label>LOCATION:</label>
+        <input type="file" onChange={handleFileChange} />
+
+        <button className="upload-button" onClick={handleUpload}>UPLOAD</button>
+        
+        <button className="add-item-button" onClick={handleAddItem}>ADD ITEM</button>
+      </div>
     </div>
   );
 };
