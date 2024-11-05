@@ -1,6 +1,8 @@
 // src/pages/AddItem.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { saveItem } from '../utils/storage';
+
 
 
 const AddItem = () => {
@@ -14,8 +16,25 @@ const AddItem = () => {
   };
 
   const handleAddItem = () => {
-    alert(`Item added: ${name}, ${category}, ${type}`);
+    if (name && category && type) {
+      const newItem = {
+        name,
+        category,
+        type,
+        location: location ? location.name : 'Unknown Location'
+      };
+      saveItem(newItem);
+      alert(`Item added: ${name}, ${category}, ${type}`);
+      // Clear form fields after adding
+      setName('');
+      setCategory('');
+      setType('');
+      setLocation(null);
+    } else {
+      alert('Please fill out all fields.');
+    }
   };
+  
 
   const handleUpload = () => {
     if (location) {
