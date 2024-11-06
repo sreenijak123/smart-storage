@@ -41,6 +41,30 @@ const Home = () => {
     }
   };
 
+  // Custom voice search function using Web Speech API (from the sample website code)
+  const startVoiceSearch = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      alert("Voice search not supported on this browser. Please use Chrome.");
+      return;
+    }
+
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const voiceInput = event.results[0][0].transcript.toLowerCase();
+      setSearchTerm(voiceInput);  // Set voice input to search term
+    };
+
+    recognition.onerror = (event) => {
+      alert("Error occurred in recognition: " + event.error);
+    };
+  };
+
   const filteredItems = items.filter(item => 
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (categoryFilter ? item.category === categoryFilter : true)
@@ -67,9 +91,8 @@ const Home = () => {
                 onChange={(e) => setSearchTerm(e.target.value)} 
               />
             </li>
-            <li onClick={SpeechRecognition.startListening}>START VOICE SEARCH</li>
-            <li onClick={SpeechRecognition.stopListening}>STOP VOICE SEARCH</li>
-            <li onClick={handleVoiceSearch}>SEARCH WITH VOICE</li>
+            <li onClick={startVoiceSearch}>🎤 START VOICE SEARCH</li>
+            {/* <li onClick={handleVoiceSearch}>SEARCH WITH VOICE</li> */}
             <li onClick={() => document.body.classList.toggle('high-contrast')}>CONTRAST</li>
             <li onClick={() => document.body.classList.toggle('large-text')}>TEXT SIZE</li>
           </ul>
