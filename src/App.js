@@ -5,7 +5,12 @@ import Home from './components/pages/Home';
 import AddItem from './components/pages/AddItem';
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
+import FAQ from './components/pages/FAQ';
+import Help from './components/pages/Help';
 import Profile from './components/pages/Profile'; // Import the Profile component
+import AboutUs from './components/pages/AboutUs';
+import ContactUs from './components/pages/ContactUs';
+import Terms from './components/pages/Term';
 import './App.css';
 
 function App() {
@@ -20,6 +25,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={isAuthenticated ? <Profile /> : <Navigate to="/login" />} /> {/* New Profile route */}
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/terms" element={<Terms />} />
+
+
+
+
+
+
         </Routes>
       </div>
     </Router>

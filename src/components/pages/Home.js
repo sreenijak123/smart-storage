@@ -27,21 +27,10 @@ const Home = () => {
 
   useEffect(() => {
     const items = getItems();
-    console.log("Items loaded from storage:", items);  // Debugging line
+    console.log("Items loaded from storage:", items);
     setItems(items);
   }, []);
 
-  const handleVoiceSearch = () => {
-    if (transcript) {
-      setSearchTerm(transcript);
-      speak(`Searching for ${transcript}`);
-      resetTranscript();
-    } else {
-      alert("No voice input detected. Please try again.");
-    }
-  };
-
-  // Custom voice search function using Web Speech API (from the sample website code)
   const startVoiceSearch = () => {
     if (!('webkitSpeechRecognition' in window)) {
       alert("Voice search not supported on this browser. Please use Chrome.");
@@ -57,7 +46,7 @@ const Home = () => {
 
     recognition.onresult = (event) => {
       const voiceInput = event.results[0][0].transcript.toLowerCase();
-      setSearchTerm(voiceInput);  // Set voice input to search term
+      setSearchTerm(voiceInput);
     };
 
     recognition.onerror = (event) => {
@@ -65,7 +54,7 @@ const Home = () => {
     };
   };
 
-  const filteredItems = items.filter(item => 
+  const filteredItems = items.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (categoryFilter ? item.category === categoryFilter : true)
   );
@@ -84,17 +73,23 @@ const Home = () => {
             <li onClick={() => setCategoryFilter('')}>ALL CATEGORIES</li>
             <li><Link to="/add-item" className="profile">ADD ITEM</Link></li>
             <li>
-              <input 
-                type="text" 
-                placeholder="SEARCH ITEM BY NAME" 
-                value={searchTerm} 
-                onChange={(e) => setSearchTerm(e.target.value)} 
+              <input
+                type="text"
+                placeholder="SEARCH ITEM BY NAME"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </li>
             <li onClick={startVoiceSearch}>🎤 START VOICE SEARCH</li>
-            {/* <li onClick={handleVoiceSearch}>SEARCH WITH VOICE</li> */}
             <li onClick={() => document.body.classList.toggle('high-contrast')}>CONTRAST</li>
             <li onClick={() => document.body.classList.toggle('large-text')}>TEXT SIZE</li>
+
+            {/* New Links for Extra Pages */}
+            <li><Link to="/help">HELP</Link></li>
+            <li><Link to="/about-us">ABOUT US</Link></li>
+            <li><Link to="/faq">FAQ</Link></li>
+            <li><Link to="/contact-us">CONTACT US</Link></li>
+            <li><Link to="/terms">TERMS & CONDITIONS</Link></li>
           </ul>
         </aside>
 
