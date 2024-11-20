@@ -29,7 +29,7 @@ function App() {
           <a href="/faq">FAQ</a>
           <a href="/contact-us">Contact Us</a>
           <a href="/favorites">Favorites</a>
-          <a href="/summary">Summary</a> {/* New link for Summary */}
+          <a href="/summary">Summary</a> 
           <a href="/terms">Terms & Conditions</a>
         </nav>
         <Routes>
