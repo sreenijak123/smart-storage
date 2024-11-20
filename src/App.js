@@ -14,44 +14,127 @@ import Favorites from './components/pages/Favorites';
 import Summary from './components/pages/Summary';
 import './App.css';
 
-function App() {
-  const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+// Mock function to check authentication status
+const isAuthenticated = () => {
+    return localStorage.getItem('authToken'); // Example: Check for a stored token
+};
 
-  return (
-    <Router>
-      <div className="App">
-        <nav>
-          <a href="/">Home</a>
-          <a href="/add-item">Add Item</a>
-          <a href="/profile">Profile</a>
-          <a href="/help">Help</a>
-          <a href="/about-us">About Us</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contact-us">Contact Us</a>
-          <a href="/favorites">Favorites</a>
-          <a href="/summary">Summary</a>
-          <a href="/register">Register</a> {/* Add Register link */}
-          <a href="/login">Login</a> {/* Add Login link */}
-          <a href="/terms">Terms & Conditions</a>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/add-item" element={<AddItem />} />
-          <Route path="/register" element={<Register />} /> {/* Register route */}
-          <Route path="/login" element={<Login />} /> {/* Login route */}
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/summary" element={<Summary />} />
-          <Route path="/terms" element={<Terms />} />
-          {!isAuthenticated && <Route path="*" element={<Navigate to="/login" />} />}
-        </Routes>
-      </div>
-    </Router>
-  );
+// ProtectedRoute component
+const ProtectedRoute = ({ children }) => {
+    return isAuthenticated() ? children : <Navigate to="/login" />;
+};
+
+function App() {
+    return (
+        <Router>
+            <div className="App">
+                <nav>
+                    <a href="/">Home</a>
+                    <a href="/add-item">Add Item</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/help">Help</a>
+                    <a href="/about-us">About Us</a>
+                    <a href="/faq">FAQ</a>
+                    <a href="/contact-us">Contact Us</a>
+                    <a href="/favorites">Favorites</a>
+                    <a href="/summary">Summary</a>
+                    <a href="/register">Register</a> {/* Add Register link */}
+                    <a href="/login">Login</a> {/* Add Login link */}
+                    <a href="/terms">Terms & Conditions</a>
+                </nav>
+                <Routes>
+                    {/* Public Routes */}
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    
+                    {/* Protected Routes */}
+                    <Route
+                        path="/"
+                        element={
+                            <ProtectedRoute>
+                                <Home />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/add-item"
+                        element={
+                            <ProtectedRoute>
+                                <AddItem />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/help"
+                        element={
+                            <ProtectedRoute>
+                                <Help />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/about-us"
+                        element={
+                            <ProtectedRoute>
+                                <AboutUs />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/faq"
+                        element={
+                            <ProtectedRoute>
+                                <FAQ />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/contact-us"
+                        element={
+                            <ProtectedRoute>
+                                <ContactUs />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/favorites"
+                        element={
+                            <ProtectedRoute>
+                                <Favorites />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/summary"
+                        element={
+                            <ProtectedRoute>
+                                <Summary />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/terms"
+                        element={
+                            <ProtectedRoute>
+                                <Terms />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Catch-all Route */}
+                    <Route path="*" element={<Navigate to="/login" />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

@@ -7,13 +7,19 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if passwords match
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
-    } else {
-      // Logic for registering the user can be added here
-      alert('Registration successful!');
-      window.location.href = '/login';
+      alert('Passwords do not match!');
+      return;
     }
+
+    // Save user credentials to localStorage
+    const userData = { username, password };
+    localStorage.setItem('registeredUser', JSON.stringify(userData));
+
+    alert('Registration successful! Please log in.');
+    window.location.href = '/login'; // Redirect to login page
   };
 
   return (

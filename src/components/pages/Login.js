@@ -6,11 +6,17 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === 'user' && password === 'password') {
-      localStorage.setItem('authenticated', 'true');
-      window.location.href = '/';
+
+    // Retrieve registered user data from localStorage
+    const registeredUser = JSON.parse(localStorage.getItem('registeredUser'));
+
+    // Validate credentials
+    if (registeredUser && registeredUser.username === username && registeredUser.password === password) {
+      localStorage.setItem('authToken', 'your_token_here'); // Store authentication token
+      alert('Login successful!');
+      window.location.href = '/'; // Redirect to the home page
     } else {
-      alert('Invalid credentials');
+      alert('Invalid credentials'); // Show error if validation fails
     }
   };
 
