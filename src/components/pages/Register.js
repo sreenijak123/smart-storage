@@ -1,45 +1,54 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Register.css'; // Import the CSS file
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleRegister = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
-    alert('Registration successful! Please log in.');
-    navigate('/login');
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+    } else {
+      // Logic for registering the user can be added here
+      alert('Registration successful!');
+      window.location.href = '/login';
+    }
   };
 
   return (
-    <div className="register-container">
-      <div className="register-box">
-        <h2>Register</h2>
-        <form onSubmit={handleRegister}>
-          <input 
-            type="text" 
-            placeholder="Username" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-            required 
+    <div>
+      <h1>Register</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            required 
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <button type="submit">Register</button>
-        </form>
-        <p>
-          Already have an account? <a href="/login">Log in here</a>
-        </p>
-      </div>
+        </div>
+        <div>
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 };

@@ -1,51 +1,43 @@
-// src/components/pages/Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Register.css'; // Import the CSS file
-
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
-    if (username === storedUsername && password === storedPassword) {
+    if (username === 'user' && password === 'password') {
       localStorage.setItem('authenticated', 'true');
-      navigate('/');
+      window.location.href = '/';
     } else {
-      alert('Invalid username or password');
+      alert('Invalid credentials');
     }
   };
 
   return (
-    <div className="register-container">
-    <div className="register-box">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <input 
-          type="text" 
-          placeholder="Username" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          required 
-        />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          required 
-        />
+    <div>
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
         <button type="submit">Login</button>
       </form>
-      <p>
-        Don’t have an account? <a href="/register">Register here</a>
-      </p>
-    </div>
     </div>
   );
 };

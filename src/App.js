@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './components/pages/Home';
 import AddItem from './components/pages/AddItem';
-import Register from './components/pages/Register';
-import Login from './components/pages/Login';
+import Register from './components/pages/Register'; // Import Registration page
+import Login from './components/pages/Login'; // Import Login page
 import FAQ from './components/pages/FAQ';
 import Help from './components/pages/Help';
 import Profile from './components/pages/Profile';
@@ -11,7 +11,7 @@ import AboutUs from './components/pages/AboutUs';
 import ContactUs from './components/pages/ContactUs';
 import Terms from './components/pages/Terms';
 import Favorites from './components/pages/Favorites';
-import Summary from './components/pages/Summary'; // Import Summary component
+import Summary from './components/pages/Summary';
 import './App.css';
 
 function App() {
@@ -29,21 +29,23 @@ function App() {
           <a href="/faq">FAQ</a>
           <a href="/contact-us">Contact Us</a>
           <a href="/favorites">Favorites</a>
-          <a href="/summary">Summary</a> 
+          <a href="/summary">Summary</a>
+          <a href="/register">Register</a> {/* Add Register link */}
+          <a href="/login">Login</a> {/* Add Login link */}
           <a href="/terms">Terms & Conditions</a>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/add-item" element={<AddItem />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} /> {/* Register route */}
+          <Route path="/login" element={<Login />} /> {/* Login route */}
           <Route path="/faq" element={<FAQ />} />
           <Route path="/help" element={<Help />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/favorites" element={<Favorites />} />
-          <Route path="/summary" element={<Summary />} /> {/* Route for Summary */}
+          <Route path="/summary" element={<Summary />} />
           <Route path="/terms" element={<Terms />} />
           {!isAuthenticated && <Route path="*" element={<Navigate to="/login" />} />}
         </Routes>
